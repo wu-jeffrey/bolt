@@ -1,21 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, SafeAreaView } from "react-native";
+
+import { FontProvider } from "./app/components/providers/FontProvider/FontProvider";
+import { HomeScreen } from "./app/screens/HomeScreen/HomeScreen.js";
+import { Typography } from "./app/components/ui/Typography.js";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <FontProvider>
+      <SafeAreaView style={styles.container}>
+        <StatusBar style="auto" />
+        <HomeScreen></HomeScreen>
+      </SafeAreaView>
+    </FontProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
