@@ -1,24 +1,41 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Dimensions, SafeAreaView } from "react-native";
-import MapView from "react-native-maps";
+import { StyleSheet, View, Dimensions, SafeAreaView, Text } from "react-native";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+import { useLocation } from "../../components/providers/Location/useLocation";
 
 export const HomeScreen = () => {
+  const location = useLocation();
   const [region, setRegion] = useState({
-    latitude: 51.5079145,
-    longitude: -0.0899163,
+    latitude: location.latitude,
+    longitude: location.longitude,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
 
   return (
     <SafeAreaView style={styles.container}>
-      <View pointerEvents="none">
+      <View style={styles.touchRejector} pointerEvents="none">
         <MapView
-          style={styles.mapContainerStyle}
-          customMapStyle={mapStyle}
+          provider={PROVIDER_GOOGLE}
+          style={styles.mapStyle}
+          customMapStyle={customMapStyle}
           region={region}
-          showsUserLocation={true}
-        ></MapView>
+        >
+          <Marker
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+          >
+            <MaterialCommunityIcons
+              name="circle-slice-8"
+              size={24}
+              color="#5FFF9F"
+            />
+          </Marker>
+        </MapView>
       </View>
     </SafeAreaView>
   );
@@ -31,26 +48,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  mapContainerStyle: {
+  mapStyle: {
+    flex: 1,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
   },
 });
 
-const mapStyle = [
+const customMapStyle = [
   {
     elementType: "geometry",
     stylers: [
       {
         color: "#f5f5f5",
-      },
-    ],
-  },
-  {
-    elementType: "labels",
-    stylers: [
-      {
-        visibility: "off",
       },
     ],
   },
@@ -75,40 +85,6 @@ const mapStyle = [
     stylers: [
       {
         color: "#f5f5f5",
-      },
-    ],
-  },
-  {
-    featureType: "administrative",
-    elementType: "geometry",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
-  },
-  {
-    featureType: "administrative.land_parcel",
-    elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#bdbdbd",
-      },
-    ],
-  },
-  {
-    featureType: "administrative.neighborhood",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
-  },
-  {
-    featureType: "poi",
-    stylers: [
-      {
-        visibility: "off",
       },
     ],
   },
@@ -158,15 +134,6 @@ const mapStyle = [
     ],
   },
   {
-    featureType: "road",
-    elementType: "labels.icon",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
-  },
-  {
     featureType: "road.arterial",
     elementType: "labels.text.fill",
     stylers: [
@@ -203,14 +170,6 @@ const mapStyle = [
     ],
   },
   {
-    featureType: "transit",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
-  },
-  {
     featureType: "transit.line",
     elementType: "geometry",
     stylers: [
@@ -234,6 +193,18 @@ const mapStyle = [
     stylers: [
       {
         color: "#c9c9c9",
+      },
+    ],
+  },
+  {
+    featureType: "water",
+    elementType: "geometry.fill",
+    stylers: [
+      {
+        color: "#a6e8f7",
+      },
+      {
+        visibility: "on",
       },
     ],
   },
