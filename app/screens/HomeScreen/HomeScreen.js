@@ -7,11 +7,11 @@ import { AnimatedLocationDot } from "./AnimatedLocationDot";
 
 export const HomeScreen = () => {
   const location = useLocation();
-  const [region, setRegion] = useState({
+  const [region] = useState({
     latitude: location.latitude,
     longitude: location.longitude,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
   });
 
   return (
@@ -61,6 +61,14 @@ const customMapStyle = [
     ],
   },
   {
+    elementType: "labels",
+    stylers: [
+      {
+        visibility: "off",
+      },
+    ],
+  },
+  {
     elementType: "labels.icon",
     stylers: [
       {
@@ -81,6 +89,31 @@ const customMapStyle = [
     stylers: [
       {
         color: "#f5f5f5",
+      },
+    ],
+  },
+  {
+    featureType: "administrative.land_parcel",
+    stylers: [
+      {
+        visibility: "off",
+      },
+    ],
+  },
+  {
+    featureType: "administrative.land_parcel",
+    elementType: "labels.text.fill",
+    stylers: [
+      {
+        color: "#bdbdbd",
+      },
+    ],
+  },
+  {
+    featureType: "administrative.neighborhood",
+    stylers: [
+      {
+        visibility: "off",
       },
     ],
   },
@@ -197,10 +230,7 @@ const customMapStyle = [
     elementType: "geometry.fill",
     stylers: [
       {
-        color: "#a6e8f7",
-      },
-      {
-        visibility: "on",
+        color: "#7ad7ff",
       },
     ],
   },
