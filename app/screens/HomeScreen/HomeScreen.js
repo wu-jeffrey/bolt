@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Dimensions, SafeAreaView, Text } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { useLocation } from "../../components/providers/Location/useLocation";
+import { AnimatedLocationDot } from "./AnimatedLocationDot";
 
 export const HomeScreen = () => {
   const location = useLocation();
@@ -25,15 +25,11 @@ export const HomeScreen = () => {
         >
           <Marker
             coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
+              latitude: region.latitude,
+              longitude: region.longitude,
             }}
           >
-            <MaterialCommunityIcons
-              name="circle-slice-8"
-              size={24}
-              color="#5FFF9F"
-            />
+            <AnimatedLocationDot />
           </Marker>
         </MapView>
       </View>
