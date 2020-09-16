@@ -9,14 +9,21 @@ function LocationProvider(props) {
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
+    let mounted = true;
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      if (mounted) {
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+      }
+
+      return () => {
+        mounted = false;
+      };
     })();
   });
 

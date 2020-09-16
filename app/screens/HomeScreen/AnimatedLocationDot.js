@@ -6,15 +6,22 @@ export const AnimatedLocationDot = () => {
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.loop(
-      Animated.timing(opacity, {
-        toValue: 1,
-        delay: 1000,
-        duration: 500,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      })
-    ).start();
+    let mounted = true;
+    if (mounted) {
+      Animated.loop(
+        Animated.timing(opacity, {
+          toValue: 1,
+          delay: 1000,
+          duration: 500,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        })
+      ).start();
+    }
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   return (
